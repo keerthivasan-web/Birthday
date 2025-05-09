@@ -106,20 +106,19 @@
       }
     }
 
-    /* Popup Modal with reduced intensity */
+    /* Popup Modal */
     .popup {
       position: fixed;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) scale(1);
+      transform: translate(-50%, -50%);
       background-color: white;
       padding: 30px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
       border-radius: 12px;
       z-index: 999;
       display: none;
       animation: fadeIn 0.8s ease-out;
-      opacity: 0.85;
     }
 
     .popup h3 {
@@ -212,13 +211,13 @@
 
       (function frame() {
         confetti({
-          particleCount: 10,
+          particleCount: 3,
           angle: 60,
           spread: 60,
           origin: { x: 0 }
         });
         confetti({
-          particleCount: 10,
+          particleCount: 3,
           angle: 120,
           spread: 60,
           origin: { x: 1 }
