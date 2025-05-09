@@ -13,19 +13,16 @@
       overflow-x: hidden;
       position: relative;
     }
-
     h1 {
       color: #d63384;
       font-size: 3rem;
       animation: fadeInDown 1.2s ease-out;
     }
-
     h2 {
       color: #ff69b4;
       font-size: 2rem;
       animation: fadeIn 2s ease-out;
     }
-
     .btn {
       background-color: #ff69b4;
       color: white;
@@ -48,7 +45,7 @@
       width: 300px;
       border-radius: 12px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      animation: spin 30s linear infinite;
+      animation: spin 10s linear infinite;
       transition: transform 0.1s ease-out;
       transform-style: preserve-3d;
     }
@@ -59,8 +56,8 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0.3; }
-      to { opacity: 0.9; }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     @keyframes fadeInDown {
@@ -109,20 +106,20 @@
       }
     }
 
-    /* Popup Modal */
+    /* Popup Modal with reduced intensity */
     .popup {
       position: fixed;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) scale(0.98);
+      transform: translate(-50%, -50%) scale(1);
       background-color: white;
       padding: 30px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
       border-radius: 12px;
       z-index: 999;
       display: none;
-      animation: fadeIn 0.5s ease-out;
-      opacity: 0.9;
+      animation: fadeIn 0.8s ease-out;
+      opacity: 0.85;
     }
 
     .popup h3 {
@@ -175,7 +172,7 @@
     <button onclick="closePopup()">Awww 🥹</button>
   </div>
 
-  <audio id="birthdaySong" loop>
+  <audio id="birthdaySong" autoplay loop>
     <source src="./Tholiya-En-Kadhaliya (mp3cut.net).mp3" type="audio/mp3">
     this one is for my tholi
   </audio>
@@ -187,6 +184,14 @@
     const popup = document.getElementById('birthdayPopup');
     let isPlaying = false;
 
+    window.onload = () => {
+      song.play();
+      triggerConfetti();
+      setTimeout(() => {
+        popup.style.display = 'block';
+      }, 3000);
+    };
+
     function toggleSong() {
       if (isPlaying) {
         song.pause();
@@ -196,25 +201,24 @@
       } else {
         song.play();
         triggerConfetti();
-        popup.style.display = 'block'; // show popup on click
         button.innerText = "⏹️ STOP PANNU 🎶";
         isPlaying = true;
       }
     }
 
     function triggerConfetti() {
-      const duration = 5 * 1000;
+      const duration = 8 * 1000;
       const end = Date.now() + duration;
 
       (function frame() {
         confetti({
-          particleCount: 5,
+          particleCount: 10,
           angle: 60,
           spread: 60,
           origin: { x: 0 }
         });
         confetti({
-          particleCount: 5,
+          particleCount: 10,
           angle: 120,
           spread: 60,
           origin: { x: 1 }
