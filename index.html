@@ -178,80 +178,85 @@
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
-    const song = document.getElementById('birthdaySong');
-    const button = document.getElementById('toggleButton');
-    const popup = document.getElementById('birthdayPopup');
-    let isPlaying = false;
+  const song = document.getElementById('birthdaySong');
+  const button = document.getElementById('toggleButton');
+  const popup = document.getElementById('birthdayPopup');
+  let isPlaying = false;
+  let hasShownPopup = false;
 
-    window.onload = () => {
-      song.play();
-      triggerConfetti();
-      setTimeout(() => {
+  window.onload = () => {
+    song.play();
+    triggerConfetti();  // Only once on load
+    setTimeout(() => {
+      if (!hasShownPopup) {
         popup.style.display = 'block';
-      }, 3000);
-    };
-
-    function toggleSong() {
-      if (isPlaying) {
-        song.pause();
-        song.currentTime = 0;
-        button.innerText = "▶️ CLICK PANNI KELUDI 🎶";
-        isPlaying = false;
-      } else {
-        song.play();
-        triggerConfetti();
-        button.innerText = "⏹️ STOP PANNU 🎶";
-        isPlaying = true;
+        hasShownPopup = true;
       }
+    }, 2000);
+  };
+
+  function toggleSong() {
+    if (isPlaying) {
+      song.pause();
+      song.currentTime = 0;
+      button.innerText = "▶️ CLICK PANNI KELUDI 🎶";
+      isPlaying = false;
+    } else {
+      song.play();
+      button.innerText = "⏹️ STOP PANNU 🎶";
+      isPlaying = true;
     }
+  }
 
-    function triggerConfetti() {
-      const duration = 8 * 1000;
-      const end = Date.now() + duration;
+  function triggerConfetti() {
+    const duration = 4000;  // Reduced duration
+    const end = Date.now() + duration;
 
-      (function frame() {
-        confetti({
-          particleCount: 3,
-          angle: 60,
-          spread: 60,
-          origin: { x: 0 }
-        });
-        confetti({
-          particleCount: 3,
-          angle: 120,
-          spread: 60,
-          origin: { x: 1 }
-        });
-        if (Date.now() < end) {
-          requestAnimationFrame(frame);
-        }
-      })();
-    }
-
-    function closePopup() {
-      popup.style.display = 'none';
-    }
-
-    // Image Interactivity
-    const images = document.querySelectorAll('.rotating-image');
-    images.forEach(image => {
-      function setRotation(x) {
-        const rotate = (x / window.innerWidth - 0.5) * 60;
-        image.style.animation = 'none';
-        image.style.transform = `rotateY(${rotate}deg) scale(1.05)`;
+    (function frame() {
+      confetti({
+        particleCount: 5, // Reduced count
+        angle: 60,
+        spread: 45,
+        origin: { x: 0 },
+        scalar: 0.6 // Smaller particles
+      });
+      confetti({
+        particleCount: 5,
+        angle: 120,
+        spread: 45,
+        origin: { x: 1 },
+        scalar: 0.6
+      });
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
       }
-      image.addEventListener('mousemove', e => setRotation(e.clientX));
-      image.addEventListener('touchmove', e => {
-        if (e.touches.length > 0) setRotation(e.touches[0].clientX);
-      });
-      image.addEventListener('mouseleave', () => {
-        image.style.animation = 'spin 30s linear infinite';
-      });
-      image.addEventListener('touchend', () => {
-        image.style.animation = 'spin 30s linear infinite';
-      });
+    })();
+  }
+
+  function closePopup() {
+    popup.style.display = 'none';
+  }
+
+  // Image Interactivity
+  const images = document.querySelectorAll('.rotating-image');
+  images.forEach(image => {
+    function setRotation(x) {
+      const rotate = (x / window.innerWidth - 0.5) * 60;
+      image.style.animation = 'none';
+      image.style.transform = `rotateY(${rotate}deg) scale(1.05)`;
+    }
+    image.addEventListener('mousemove', e => setRotation(e.clientX));
+    image.addEventListener('touchmove', e => {
+      if (e.touches.length > 0) setRotation(e.touches[0].clientX);
     });
-  </script>
+    image.addEventListener('mouseleave', () => {
+      image.style.animation = 'spin 30s linear infinite';
+    });
+    image.addEventListener('touchend', () => {
+      image.style.animation = 'spin 30s linear infinite';
+    });
+  });
+</script>
 
 </body>
 </html>
